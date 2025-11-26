@@ -1,39 +1,85 @@
 // Import necessary components from react-router-dom and other parts of the application.
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
+import React, { useState, useEffect } from "react";
 
 export const Demo = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
   const { store, dispatch } = useGlobalReducer()
+    let navigate = useNavigate();
+  const API_URL = 'https://playground.4geeks.com/contact/agendas/Youngjude'
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+
+  const handleSubmit = (event, ) => {
+
+    event.preventDefault()
+
+    if (event.key == "Enter" && name.trim !== "" || phone !== "" || email !== "" || address !== "") {
+      fetch(API_URL + "/contacts", {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            phone: phone,
+            email: email,
+            address: address
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+        .then(resp => {
+          console.log(resp)
+          if (resp.ok) {
+            setName(""), setPhone(""), setEmail(""), setAddress("")
+          }
+          console.log(resp.status)
+          return resp.json()
+        })
+        .then((data) => {
+          console.log(data)
+          dispatch({
+            type: "add-contact",
+            payload: { ...store.contacts, data }
+          })
+          
+        })
+    }
+  }
 
   return (
+
     <div className="container">
-      <ul className="list-group">
-        {/* Map over the 'todos' array from the store and render each item as a list element */}
-        {store && store.todos?.map((item) => {
-          return (
-            <li
-              key={item.id}  // React key for list items.
-              className="list-group-item d-flex justify-content-between"
-              style={{ background: item.background }}> 
-              
-              {/* Link to the detail page of this todo. */}
-              <Link to={"/single/" + item.id}>Link to: {item.title} </Link>
-              
-              <p>Open file ./store.js to see the global store that contains and updates the list of colors</p>
-              
-              <button className="btn btn-success" 
-                onClick={() => dispatch({
-                  type: "add_task", 
-                  payload: { id: item.id, color: '#ffa500' }
-                })}>
-                Change Color
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      <br />
+      <form onSubmit={handleSubmit}>
+
+        <div className="mb-2">
+          <label htmlFor="formGroupExampleInput" className="form-label">Full name</label>
+          <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Full name"
+            onChange={(e) => setName(e.target.value)} value={name} />
+        </div>
+        <div className="mb-2">
+          <label htmlFor="formGroupExampleInput2" className="form-label">Email</label>
+          <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="Enter email"
+            onChange={(e) => setEmail(e.target.value)} value={email} />
+        </div>
+        <div className="mb-2">
+          <label htmlFor="formGroupExampleInput" className="form-label">Phone</label>
+          <input type="number" className="form-control" id="formGroupExampleInput" placeholder="Enter Phone"
+            onChange={(e) => setPhone(e.target.value)} value={phone} />
+        </div>
+        <div className="mb-2">
+          <label htmlFor="formGroupExampleInput2" className="form-label">Address</label>
+          <input type="text" className="form-control" id="formGroupExampleInput2" placeholder="Enter Address"
+            onChange={(e) => setAddress(e.target.value)} value={address} />
+        </div>
+
+        <div className="mb-3">
+          <button type="submit" className="btn btn-primary" >Save</button>
+        </div>
+      </form>
 
       <Link to="/">
         <button className="btn btn-primary">Back home</button>
