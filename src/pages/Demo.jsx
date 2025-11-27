@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 export const Demo = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
   const { store, dispatch } = useGlobalReducer()
-    let navigate = useNavigate();
+    const navigate = useNavigate();
   const API_URL = 'https://playground.4geeks.com/contact/agendas/Youngjude'
 
   const [name, setName] = useState("");
@@ -36,6 +36,7 @@ export const Demo = () => {
           if (resp.ok) {
             setName(""), setPhone(""), setEmail(""), setAddress("")
           }
+          
           console.log(resp.status)
           return resp.json()
         })
@@ -45,6 +46,7 @@ export const Demo = () => {
             type: "add-contact",
             payload: { ...store.contacts, data }
           })
+           navigate("/")
           
         })
     }

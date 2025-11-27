@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 export const Home = () => {
 	const { store, dispatch } = useGlobalReducer()
 
-
 	const API_URL = 'https://playground.4geeks.com/contact/agendas/Youngjude'
 
 	const createContact = () => {
@@ -38,7 +37,7 @@ export const Home = () => {
 			.catch((error) => console.log(error))
 	}
 
-	const deleteContact = (id, getStore, setStore) => {
+	const deleteContact = (id,) => {
 		fetch(`${API_URL}/contacts/${id}`, {
 			method: "DELETE",
 			headers: {
@@ -52,19 +51,11 @@ export const Home = () => {
 					payload: store.contacts.filter(item => item.id !== id)
 				})
 			})
-
-
 	}
 
 	useEffect(() => {
 		bringList()
 	}, [])
-
-	const [editContact, setEditContact] = useState(null);
-	const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditContact({ ...editContact, [name]: value });
-  };
 
 	return (
 		<div className="text-center">
@@ -83,8 +74,8 @@ export const Home = () => {
 								<p>{item.phone}</p>
 								<p>{item.email}</p>
 								<div>
-									<Link to="/info" onClick={() => handleChange(item)}>
-										Edit
+									<Link to={"/edit/" + item.id} >
+										edit
 									</Link>
 									<button onClick={() => deleteContact(item.id)}
 									>delete</button>
