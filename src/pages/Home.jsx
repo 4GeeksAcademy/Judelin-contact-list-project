@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationPin, faPencil, faPhone, faTrash, faMessage } from '@fortawesome/free-solid-svg-icons';
 
 export const Home = () => {
 	const { store, dispatch } = useGlobalReducer()
@@ -66,8 +68,8 @@ export const Home = () => {
 	}
 
 	return (
-		<div className="">
-			<div className="add-button">
+		<div className="container-c">
+			<div className="add-button ">
 				<Link to="/demo">
 					<button className="btn btn-primary">Add new contact</button>
 				</Link>
@@ -78,30 +80,32 @@ export const Home = () => {
 					{
 						store.contacts.map(item =>
 							<div className="contact-container" key={item.id}>
-								<div className="contact-image">
-									<img
-										className="rounded-circle"
-										src="https://picsum.photos/170/170/"
-										alt="Contact"
+								<div className="container-profile">
+									<div className="contact-image">
+										<img
+											className="rounded-circle"
+											src="https://picsum.photos/170/170/"
+											alt="Contact"
 
-									/>
-								</div>
-								<div className="contact-info">
-									<h5>{item.name}</h5>
-									<p>{item.address}</p>
-									<p>{item.phone}</p>
-									<p>{item.email}</p>
+										/>
+									</div>
+									<div className="contact-info">
+										<h5> {item.name}</h5>
+										<p> <span> <FontAwesomeIcon icon={faLocationPin} /></span> {item.address}</p>
+										<p> <span> <FontAwesomeIcon icon={faPhone} /> </span> {item.phone}</p>
+										<p> <span> <FontAwesomeIcon icon={faMessage} /> </span> {item.email}</p>
+									</div>
 								</div>
 
 								<div className="contact-button">
-									<Link to={"/edit/" + item.id} >
-										edit
+									<Link className="fa-editar" to={"/edit/" + item.id} >
+										<FontAwesomeIcon icon={faPencil} />
 									</Link>
 									{/* <button onClick={() => deleteContact(item.id)}
 									>delete</button> */}
 
-									<button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => handleId} >
-										delete
+									<button className="button-trash" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => handleId} >
+										<FontAwesomeIcon icon={faTrash} />
 									</button>
 
 									<div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
