@@ -11,7 +11,7 @@ export const Edit = () => {
 
   let navigate = useNavigate();
   const API_URL = 'https://playground.4geeks.com/contact/agendas/Youngjude'
- const [idUsuario, setIdUsuario]= useState("")
+  const [idUsuario, setIdUsuario] = useState("")
   const [info, setInfo] = useState({
 
     name: "",
@@ -29,11 +29,11 @@ export const Edit = () => {
         email: editContact.email,
         phone: editContact.phone,
         address: editContact.address,
-      
+
       })
       setIdUsuario(editContact.id)
     }
-    
+
   }, [contactId])
 
   const handleEdit = (id) => {
@@ -48,10 +48,11 @@ export const Edit = () => {
 
         if (resp.ok)
           return resp.json()
+        navigate("/")
 
 
       })
-     
+
       .catch((error) => console.error("Error updating contact:", error));
 
   }

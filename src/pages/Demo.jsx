@@ -46,7 +46,6 @@ export const Demo = () => {
             type: "add-contact",
             payload: { ...store.contacts, data }
           })
-          navigate("/")    
         })
     }
   }
