@@ -71,7 +71,7 @@ export const Home = () => {
 		<div className="container-c">
 			<div className="add-button ">
 				<Link to="/demo">
-					<button className="btn btn-primary">Add new contact</button>
+					<button className="btn btn-success">Add new contact</button>
 				</Link>
 			</div>
 			<ul>
