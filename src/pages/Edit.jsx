@@ -9,15 +9,15 @@ export const Edit = () => {
 
   const { contactId } = useParams()
 
-
   let navigate = useNavigate();
   const API_URL = 'https://playground.4geeks.com/contact/agendas/Youngjude'
 
   const [info, setInfo] = useState({
+
     name: "",
-    email: "",
     phone: "",
-    address: ""
+    email: "",
+    address: "",
   })
 
   useEffect(() => {
@@ -31,47 +31,28 @@ export const Edit = () => {
         address: editContact.address,
       })
     }
+    console.log(editContact)
   }, [contactId])
 
-  const handleEdit = (event, id,) => {
+  const handleEdit = (event, editContact) => {
 
     event.preventDefault()
-
-    fetch(`${API_URL}/contacts/${id}`, {
+    fetch(`${API_URL}/contacts/${editContact.id}`, {
       method: "PUT",
-      body: JSON.stringify({
-        info: {
-          name: name,
-          phone: phone,
-          email: email,
-          address: address
-        }
-      }),
+      body: JSON.stringify(info),
       headers: {
         "Content-Type": "application/json"
       },
     })
       .then(resp => {
+
         if (resp.ok)
           return resp.json()
-      })
-      .then((data) => {
-        if (data) {
 
-          const updated = store.contacts.map(contact => {
-            if (contact.id == id) {
-              contact = data
-            }
-            return contact
-          })
-          dispatch({
-            type: "add-contact",
-            payload: { contacts: updated }
-          })
-
-        }
 
       })
+     
+      .catch((error) => console.error("Error updating contact:", error));
 
   }
 
@@ -100,7 +81,7 @@ export const Edit = () => {
         </div>
 
         <div className="mb-3">
-          <button type="submit" className="btn btn-primary" >Save</button>
+          <button type="submit" className="btn btn-primary" onClick={handleEdit} >Save</button>
         </div>
       </form>
       <Link to="/">
