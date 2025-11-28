@@ -11,7 +11,7 @@ export const Edit = () => {
 
   let navigate = useNavigate();
   const API_URL = 'https://playground.4geeks.com/contact/agendas/Youngjude'
-
+ const [idUsuario, setIdUsuario]= useState("")
   const [info, setInfo] = useState({
 
     name: "",
@@ -29,15 +29,15 @@ export const Edit = () => {
         email: editContact.email,
         phone: editContact.phone,
         address: editContact.address,
+      
       })
+      setIdUsuario(editContact.id)
     }
-    console.log(editContact)
+    
   }, [contactId])
 
-  const handleEdit = (event, editContact) => {
-
-    event.preventDefault()
-    fetch(`${API_URL}/contacts/${editContact.id}`, {
+  const handleEdit = (id) => {
+    fetch(`${API_URL}/contacts/${id}`, {
       method: "PUT",
       body: JSON.stringify(info),
       headers: {
@@ -58,7 +58,7 @@ export const Edit = () => {
 
   return (
     <div>
-      <form onSubmit={handleEdit}>
+      <form >
         <div className="mb-2">
           <label htmlFor="formGroupExampleInput" className="form-label">Full name</label>
           <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Full name"
@@ -81,7 +81,7 @@ export const Edit = () => {
         </div>
 
         <div className="mb-3">
-          <button type="submit" className="btn btn-primary" onClick={handleEdit} >Save</button>
+          <button type="submit" className="btn btn-primary" onClick={() => handleEdit(idUsuario)} >Save</button>
         </div>
       </form>
       <Link to="/">

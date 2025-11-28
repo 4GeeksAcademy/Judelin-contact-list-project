@@ -46,8 +46,7 @@ export const Demo = () => {
             type: "add-contact",
             payload: { ...store.contacts, data }
           })
-           navigate("/")
-          
+          navigate("/")    
         })
     }
   }
@@ -83,8 +82,8 @@ export const Demo = () => {
         </div>
       </form>
 
-      <Link to="/">
-        <button className="btn btn-primary">Back home</button>
+      <Link to="/home">
+        <button className="btn btn-primary" >Back home</button>
       </Link>
     </div>
   );
