@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
 import React, { useState, useEffect } from "react";
 
-export const Demo = () => {
+export const Demo = ( ) => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
   const { store, dispatch } = useGlobalReducer()
     const navigate = useNavigate();
@@ -14,11 +14,10 @@ export const Demo = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
-  const handleSubmit = (event, ) => {
-
+  const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (event.key == "Enter" && name.trim !== "" || phone !== "" || email !== "" || address !== "") {
+    if (event.key == "Enter" && name.trim() !== "" || phone.trim() !== "" || email.trim() !== "" || address.trim() !== "") {
       fetch(API_URL + "/contacts", {
         method: "POST",
         body: JSON.stringify({
@@ -32,12 +31,14 @@ export const Demo = () => {
         },
       })
         .then(resp => {
+          // navigate=("/")
           console.log(resp)
           if (resp.ok) {
             setName(""), setPhone(""), setEmail(""), setAddress("")
           }
           
           console.log(resp.status)
+          navigate("/")
           return resp.json()
         })
         .then((data) => {
@@ -81,7 +82,7 @@ export const Demo = () => {
         </div>
       </form>
 
-      <Link to="/home">
+      <Link to="/">
         <button className="btn btn-primary" >Back home</button>
       </Link>
     </div>

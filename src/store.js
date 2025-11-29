@@ -1,5 +1,5 @@
-export const initialStore=()=>{
-  return{
+export const initialStore = () => {
+  return {
     message: null,
     todos: [
       {
@@ -14,22 +14,25 @@ export const initialStore=()=>{
       }
     ],
     contacts: []
-  }
-}
+  };
+};
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
-    case 'add_task':
+  switch (action.type) {
 
-      const { id,  color } = action.payload
+    case "set-contacts":
+      return { 
+        ...store, 
+        contacts: Array.isArray(action.payload) ? action.payload : [] 
+      };
 
-   
+    case "add-contact":
+      return { 
+        ...store, 
+        contacts: [...store.contacts, action.payload] 
+      };
 
-      case "add-contact" :
-
-      return {...store, contacts: action.payload}
-      
     default:
       throw Error('Unknown action.');
-  }    
+  }
 }
