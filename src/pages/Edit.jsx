@@ -49,17 +49,16 @@ export const Edit = () => {
         if (resp.ok)
           return resp.json()
         navigate("/")
-
-
       })
-
       .catch((error) => console.error("Error updating contact:", error));
-
   }
 
   return (
     <div>
-      <form >
+      <form className="container">
+       <div className="text-center p-4 mt-5 fs-1">
+        <h2 className="fs-1">Add a new contact</h2>
+       </div>
         <div className="mb-2">
           <label htmlFor="formGroupExampleInput" className="form-label">Full name</label>
           <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Full name"
@@ -81,7 +80,7 @@ export const Edit = () => {
             onChange={(e) => setInfo({ ...info, address: e.target.value })} value={info.address} />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-2 bg-primary text-center mt-3 rounded-1">
           <button type="submit" className="btn btn-primary" onClick={() => handleEdit(idUsuario)} >Save</button>
         </div>
       </form>

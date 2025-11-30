@@ -71,8 +71,8 @@ export const Home = () => {
 
             <ul>
                 <li>
-                    {store.contacts.map((item) =>
-                        <div className="contact-container" key={item.id}>
+                    {store.contacts.map((item, id) =>
+                        <div className="contact-container" key={id}>
                             <div className="container-profile">
                                 <div className="contact-image">
                                     <img
